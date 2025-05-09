@@ -49,11 +49,7 @@
       border:none; border-radius:.3rem; cursor:pointer; transition:background .3s;
       z-index:10; font-family:'Poppins',sans-serif;
     }
-    #fs-btn { top:20px; left:20px; }
     #settings-btn { top:20px; right:20px; font-size:1.5rem; }
-    body.waiting #fs-btn { background:rgba(255,255,255,.7); color:#000; }
-    body.timing #fs-btn, body.result #fs-btn { background:rgba(0,0,0,.3); color:#fff; }
-    #fs-btn:hover { background:rgba(0,0,0,.5); }
     /* Settings dropdown */
     #settings-menu {
       position:absolute; top:55px; right:20px; background:rgba(255,255,255,.95);
@@ -80,7 +76,6 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body class="waiting">
-  <button id="fs-btn">Fullscreen</button>
   <button id="settings-btn">⋮</button>
   <div id="settings-menu">
     <label class="setting">Show Map
@@ -93,7 +88,6 @@
   let state='waiting', startTime=0, raf, lastD=0;
   let map, coords, initialized=false;
   const body=document.body, msg=document.getElementById('message');
-  const fsBtn=document.getElementById('fs-btn');
   const settingsBtn=document.getElementById('settings-btn');
   const menu=document.getElementById('settings-menu');
   const mapSwitch=document.getElementById('map-switch');
@@ -104,15 +98,6 @@
     if(state==='waiting') startTiming();
     else if(state==='timing') stopTiming();
     else reset();
-  });
-
-  // Fullscreen button
-  fsBtn.addEventListener('click', e=>{ e.stopPropagation();
-    if(!document.fullscreenElement) document.documentElement.requestFullscreen();
-    else document.exitFullscreen();
-  });
-  document.addEventListener('fullscreenchange', ()=>{
-    fsBtn.textContent = document.fullscreenElement ? 'Exit Fullscreen' : 'Fullscreen';
   });
 
   // Settings toggle
